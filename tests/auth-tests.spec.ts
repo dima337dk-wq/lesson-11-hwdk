@@ -35,14 +35,14 @@ test('TL-11-4 Login/student returns 401 if data is empty', async ({ request }) =
   expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
 })
 
-test('TL-11-4 Login/student returns 401 if data is missing', async ({ request }) => {
+test('TL-11-5 Login/student returns 401 if data is missing', async ({ request }) => {
   const response = await request.post(`${BASE_URL}/login/student`)
   expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
 })
 
 // homework 11 ##################################
 
-test('TL-11-5 Login/student check JWT', async ({ request }) => {
+test('TL-11-6 Login/student check JWT', async ({ request }) => {
   const response = await request.post(`${BASE_URL}/login/student`, {
     data: LoginDTO.createLoginWithCorrectData(),
   })
@@ -52,7 +52,7 @@ test('TL-11-5 Login/student check JWT', async ({ request }) => {
   expect(jwtValue).toMatch(jwtRegex)
 })
 
-test('TL-11-6 Login/student return 405 with different methods', async ({ request }) => {
+test('TL-11-7 Login/student return 405 with different methods', async ({ request }) => {
   const response1 = await request.put(`${BASE_URL}/login/student`, {
     data: LoginDTO.createLoginWithCorrectData(),
   })
@@ -68,7 +68,7 @@ test('TL-11-6 Login/student return 405 with different methods', async ({ request
   expect(response3.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
 })
 
-test('TL-11-7 Login/student return 401 if add field', async ({ request }) => {
+test('TL-11-8 Login/student return 401 if add field', async ({ request }) => {
   const response = await request.post(`${BASE_URL}/login/student`, {
     data: {
       username: 'asd',
@@ -80,7 +80,7 @@ test('TL-11-7 Login/student return 401 if add field', async ({ request }) => {
   expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
 })
 
-test('TL-11-8 Login/student return 401 if only password', async ({ request }) => {
+test('TL-11-9 Login/student return 401 if only password', async ({ request }) => {
   const response = await request.post(`${BASE_URL}/login/student`, {
     data: {
       password: 'asd',
@@ -90,7 +90,7 @@ test('TL-11-8 Login/student return 401 if only password', async ({ request }) =>
   expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
 })
 
-test('TL-11-9 Login/student return 401 if different types', async ({ request }) => {
+test('TL-11-10 Login/student return 401 if different types', async ({ request }) => {
   const response = await request.post(`${BASE_URL}/login/student`, {
     data: {
       username: 123,
