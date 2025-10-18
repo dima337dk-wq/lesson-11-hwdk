@@ -15,3 +15,9 @@ test('get orders with api client', async ({ request }) => {
 
   expect(ordersBefore.length < ordersAfter.length).toBeTruthy()
 })
+
+test('delete order with api client', async ({ request }) => {
+  const apiClient = await ApiClient.create(request)
+  const deleteId = await apiClient.deleteOrder()
+  console.log('deleteId:', deleteId)
+})

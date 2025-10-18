@@ -7,6 +7,7 @@ import { expect } from '@playwright/test'
 const serviceURL = 'https://backend.tallinn-learning.ee';
 const loginPath = '/login/student';
 const orderPath = '/orders';
+const deletePath = '/orders/50';
 
 export class ApiClient {
   request: APIRequestContext;
@@ -61,5 +62,17 @@ export class ApiClient {
     expect(json.length).toBeGreaterThan(0);
 
     return json;
+  }
+
+  async deleteOrder(): Promise<void> {
+    console.log('deleting order...');
+    const response = await this.request.delete(`${serviceURL}${deletePath}`, {
+      headers: {
+        Authorization: `Bearer ${this.jwt}`
+      }
+    });
+
+    expect(response.status()).toBe(StatusCodes.OK);
+    console.log('Delete completed');
   }
 }
