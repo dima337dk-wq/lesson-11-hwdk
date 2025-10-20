@@ -9,7 +9,7 @@ const loginPath = '/login/student'
 const orderPath = '/orders'
 
 async function authFun(request: APIRequestContext): Promise<string> {
-  const authResponse: APIResponse  = await request.post(`${serviceURL}${loginPath}`, {
+  const authResponse: APIResponse = await request.post(`${serviceURL}${loginPath}`, {
     data: LoginDTO.createLoginWithCorrectData(),
   })
 
