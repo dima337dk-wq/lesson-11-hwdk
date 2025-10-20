@@ -1,14 +1,15 @@
-import { expect, test } from '@playwright/test'
+import { APIResponse, expect, test } from '@playwright/test'
 import { LoginDTO } from './dto/LoginDTO'
 import { StatusCodes } from 'http-status-codes'
 import { OrderDTO } from './dto/OrderDTO'
+import { APIRequestContext } from 'playwright-core'
 
 const serviceURL = 'https://backend.tallinn-learning.ee'
 const loginPath = '/login/student'
 const orderPath = '/orders'
 
-async function authFun(request: any): Promise<string> {
-  const authResponse = await request.post(`${serviceURL}${loginPath}`, {
+async function authFun(request: APIRequestContext): Promise<string> {
+  const authResponse: APIResponse  = await request.post(`${serviceURL}${loginPath}`, {
     data: LoginDTO.createLoginWithCorrectData(),
   })
 
@@ -19,7 +20,7 @@ async function authFun(request: any): Promise<string> {
   return await authResponse.text()
 }
 
-async function createFun(request: any, jwt: string): Promise<any> {
+async function createFun(request: APIRequestContext, jwt: string): Promise<APIResponse> {
   const createResponse = await request.post(`${serviceURL}${orderPath}`, {
     headers: { Authorization: `Bearer ${jwt}` },
     data: OrderDTO.createOrderWithRandomData(),
